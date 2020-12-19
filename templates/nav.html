@@ -1,0 +1,17 @@
+<nav class="navbar navbar-dark" style="background-color: #232225;">
+    <div class="container">
+
+    <a class="navbar-brand" href="/"><span style="color:#a6baec">Practicum </span>projects</a>
+    <nav class="my-2 my-md-0 mr-md-3">
+        {% if user.is_authenticated %}
+            <a class="p-2 text-light" href="{% url 'profile' username=user.username %}">Моя страница</a>
+            <a class="p-2 text-light" href="{% url 'new_post' %}">Новая запись</a>
+            <a class="p-2 text-light" href="{% url 'password_change' %}">Изменить пароль</a>
+            <a class="p-2 text-light" href="{% url 'logout' %}">Выйти</a>
+        {% else %}
+            <a class="p-2 text-light" href="{% url 'login' %}">Войти</a> |
+            <a class="p-2 text-light" href="{% url 'signup' %}">Регистрация</a>
+        {% endif %}
+    </nav>
+    </div>
+</nav> 

@@ -1,0 +1,12 @@
+{% if user.is_authenticated %}
+    <div class="card mb-3 mt-1 shadow-sm">
+        <nav class="nav">
+            <a class="nav-item nav-link {% if index %}active{% else %}text-muted{% endif %}" href="{% url 'index' %}">
+                Все публикации
+            </a>
+            <a class="nav-item nav-link {% if follow %}active{% else %}text-muted{% endif %}" href="{% url 'follow_index' %}">
+                Моя лента
+            </a>
+        </nav>
+    </div>
+{% endif %}

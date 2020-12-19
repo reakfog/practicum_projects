@@ -1,0 +1,33 @@
+<div class="col-md-3 mb-3 mt-1">
+    <div class="card">
+        {% comment %} <img src="..." class="card-img-top" alt="..."> {% endcomment %}
+        <div class="card-body">
+            <div class="h5 card-title">
+                {{ profile.get_full_name }} <br/>
+                <small class="text-muted">
+                    @{{ profile.username }}
+                </small>
+            </div>
+            <div class="card-text">
+                Публикаций: {{ posts_count }} <br/>
+                Подписчики: {{ profile.following.count }} <br/>
+                Подписки: {{ profile.follower.count }}
+            </div>
+            {% if request.user.username != profile.username %}
+                <br/>
+                {% if following %}
+                    <a class="btn btn-sm btn-secondary" href="{% url 'profile_unfollow' profile.username %}" role="button">
+                        Отписаться
+                    </a>
+                {% else %}
+                    <a class="btn btn-sm btn-primary" href="{% url 'profile_follow' profile.username %}" role="button">
+                        Подписаться
+                    </a>
+                {% endif %}
+            {% endif %}
+        </div>
+        {% comment %} <div class="card-footer">
+            <small class="text-muted">Last updated 3 mins ago</small>
+        </div> {% endcomment %}
+    </div>
+</div>
