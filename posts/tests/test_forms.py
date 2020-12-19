@@ -1,7 +1,8 @@
+from django.urls import reverse
 from posts.tests.base import PostBaseTestCase
 from django.core.files.uploadedfile import SimpleUploadedFile
 
-from posts.models import Post
+from posts.models import Comment, Post
 
 
 class FormsTest(PostBaseTestCase):
@@ -66,4 +67,20 @@ class FormsTest(PostBaseTestCase):
         # Проверяем, отредактирован ли конкретный пост
         self.assertEqual(Post.objects.get(id=1).text, 'Изменённый текст')
 
-        
+    def test_comment(self) -> None:
+        authorized_client_1 = FormsTest.authorized_client_1
+        user_1 = FormsTest.user_1
+        new_post = FormsTest.new_post
+        form_data = {
+            'text': 'Комментарий №1'
+        }
+        comments_count = Comment.objects.count()
+        response = authorized_client_1.post(
+            reverse('add_comment',
+                    kwargs={'username': user_1.username,
+                            'post_id': new_post.id}),
+            data=form_data,
+            follow=True
+        )
+        # Проверяем, увеличилось ли число комментариев
+        self.assertEqual(Comment.objects.count(), comments_count+1)

@@ -1,3 +1,4 @@
+from django.urls import reverse
 from django.contrib.flatpages.models import FlatPage
 from posts.tests.base import PostBaseTestCase
 
@@ -103,7 +104,19 @@ class URLTests(PostBaseTestCase):
         authorized_client_2 = URLTests.authorized_client_2
         response = authorized_client_2.get(pages['post_edit.html'])
         self.assertRedirects(response, pages['post.html'])
-
+    
+    # Проверка работы редиректа со страницы редактирования поста
+    # для тех у кого нет прав доступа
+    def test_redirect_from_add_comment_for_client_with_no_access(self) -> None:
+        pages = URLTests.pages
+        guest_client = URLTests.guest_client
+        user_1 = URLTests.user_1
+        new_post = URLTests.new_post
+        response = guest_client.get(reverse('add_comment',
+                    kwargs={'username': user_1.username,
+                            'post_id': new_post.id}),)
+        expected_url = f'/auth/login/?next=/{user_1.username}/{new_post.id}/comment'
+        self.assertRedirects(response, expected_url)
 
 class StaticURLTests(PostBaseTestCase):
     # Проверка работы страниц

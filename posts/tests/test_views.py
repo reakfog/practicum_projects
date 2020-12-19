@@ -101,11 +101,11 @@ class ViewsTest(PostBaseTestCase):
         self.assertEqual(len(response.context['page']), 0)
 
 
-class FollowAndCommentTest(PostBaseTestCase):
+class FollowTest(PostBaseTestCase):
     def test_follow(self) -> None:
-        authorized_client_1 = FollowAndCommentTest.authorized_client_1
-        user_1 = FollowAndCommentTest.user_1
-        user_2 = FollowAndCommentTest.user_2
+        authorized_client_1 = FollowTest.authorized_client_1
+        user_1 = FollowTest.user_1
+        user_2 = FollowTest.user_2
         authorized_client_1.get(
             reverse('profile_follow', kwargs={'username': user_2.username})
         )
@@ -118,9 +118,8 @@ class FollowAndCommentTest(PostBaseTestCase):
         self.assertEqual(following, 0)
 
     def test_follow_index(self) -> None:
-        authorized_client_1 = FollowAndCommentTest.authorized_client_1
-        user_1 = FollowAndCommentTest.user_1
-        user_2 = FollowAndCommentTest.user_2
+        authorized_client_1 = FollowTest.authorized_client_1
+        user_2 = FollowTest.user_2
         Post.objects.create(text='Текст избранного автора',
                             author=user_2)
         authorized_client_1.get(
