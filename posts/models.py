@@ -107,6 +107,10 @@ class Follow(models.Model):
         verbose_name = 'Подписка'
         verbose_name_plural = 'Подписки'
         ordering = ('-author',)
+        constraints = [
+            models.UniqueConstraint(fields=['author', 'user'],
+                                    name='unique_author_subscription_key')
+        ]
     
     def __str__(self):
         return f'{self.user} подписан на {self.author}'

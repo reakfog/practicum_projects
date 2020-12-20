@@ -109,13 +109,19 @@ class FollowTest(PostBaseTestCase):
         authorized_client_1.get(
             reverse('profile_follow', kwargs={'username': user_2.username})
         )
-        following = Follow.objects.filter(user=user_1, author=user_2).count()
-        self.assertEqual(following, 1)
+        following = Follow.objects.filter(user=user_1, author=user_2).exists()
+        self.assertTrue(following)
+    
+    def test_unfollow(self) -> None:
+        authorized_client_1 = FollowTest.authorized_client_1
+        user_1 = FollowTest.user_1
+        user_2 = FollowTest.user_2
+        Follow.objects.create(user=user_1, author=user_2)
         authorized_client_1.get(
             reverse('profile_unfollow', kwargs={'username': user_2.username})
         )
-        following = Follow.objects.filter(user=user_1, author=user_2).count()
-        self.assertEqual(following, 0)
+        following = Follow.objects.filter(user=user_1, author=user_2).exists()
+        self.assertFalse(following)
 
     def test_follow_index(self) -> None:
         authorized_client_1 = FollowTest.authorized_client_1

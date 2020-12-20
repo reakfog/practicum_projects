@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Comment, Post, Group
+from .models import Comment, Post, Group, Follow
 
 
 class PostAdmin(admin.ModelAdmin):
@@ -17,12 +17,19 @@ class GroupAdmin(admin.ModelAdmin):
 
 
 class CommentAdmin(admin.ModelAdmin):
-     list_display = ('pk', 'text', 'author', 'created', 'post')
+     list_display = ('pk', 'text', 'author', 'created', 'post',)
      search_fields = ('pk', 'text',)
      list_filter = ('created',)
      empty_value_display = '-пусто-'
 
 
+class FollowAdmin(admin.ModelAdmin):
+     list_display = ('author', 'user',)
+     search_fields = ('author', 'user',)
+     list_filter = ('author',)
+
+
 admin.site.register(Post, PostAdmin)
 admin.site.register(Group, GroupAdmin)
 admin.site.register(Comment, CommentAdmin)
+admin.site.register(Follow, FollowAdmin)

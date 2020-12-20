@@ -147,14 +147,10 @@ def profile_follow(request, username):
     #Тот, на кого подписываются
     follow = get_object_or_404(User, username=username)
     #Тот, кто подписывается
-    follower = User.objects.get(username=request.user.username)
+    follower = request.user
     if follow == follower:
         return redirect('profile', username)
-    favorite_object = Follow.objects.filter(
-        user=follower, author=follow).count()
-    if not favorite_object:
-        #Тот, кто подписывается
-        Follow.objects.create(user=follower, author=follow)
+    Follow.objects.get_or_create(user=follower, author=follow)
     return redirect('profile', username)
 
 
@@ -163,7 +159,7 @@ def profile_unfollow(request, username):
     #Тот, от кого отписываются
     follow = get_object_or_404(User, username=username)
     #Тот, кто отписывается
-    follower = User.objects.get(username=request.user.username)
+    follower = request.user
     Follow.objects.filter(user=follower, author=follow).delete()
     return redirect('profile', username)
 
