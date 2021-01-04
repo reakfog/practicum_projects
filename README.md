@@ -35,17 +35,17 @@ Python3, Django 2.2, SQLite
 Необходимо чтобы на локальном компьютере был установлен Python3:
 1. Склонировать репозиторий на локальный компьютер.
 2. В корневой директории проекта установить виртуальное окружение используя команду:
-⋅⋅⋅`python3 -m venv venv`
+    + `python3 -m venv venv`
 3. В директории ./yatube создать файл .env и прописать в нем SECRET_KEY - секретный ключ Django проекта.
 4. Установить необходимые библиотеки используя команду:
-⋅⋅⋅`pip install -r requirements.txt`
+    + `pip install -r requirements.txt`
 5. Примените все необходимые миграции:
-⋅⋅⋅`python manage.py makemigrations`
-⋅⋅⋅`python manage.py migrate`
+    + `python manage.py makemigrations`
+    + `python manage.py migrate`
 6. Для доступа к панели администратора создайте администратора:
-⋅⋅⋅`python manage.py createsuperuser`
+    + `python manage.py createsuperuser`
 7. Запустите локальный сервер командой:
-⋅⋅⋅`python manage.py runserver`
+    + `python manage.py runserver`
 
 > Приложение будет доступно в браузере по адресу http://127.0.0.1:8000/.
 
